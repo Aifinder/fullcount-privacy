@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>GridFree — Home Backup Power, Standby Generators &amp; Battery Storage</title>
+<meta name="description" content="GridFree keeps your home powered when the grid goes down. Explore home standby generators, portable power, and whole-home battery storage. Get a free quote at gridfree.com." />
+<link rel="canonical" href="https://www.gridfree.com/" />
+<style>
+  :root {
+    --ink: #101418;
+    --ink-2: #2b333c;
+    --muted: #5c6773;
+    --line: #e4e8ec;
+    --bg: #ffffff;
+    --bg-soft: #f4f6f8;
+    --brand: #f26a1b;        /* GridFree orange */
+    --brand-dark: #d4550a;
+    --navy: #0e1c2b;
+    --navy-2: #16283c;
+    --gold: #ffb35c;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.55;
+  }
+  img, svg { max-width: 100%; }
+  a { color: inherit; }
+  .wrap { max-width: 1140px; margin: 0 auto; padding: 0 22px; }
+  .btn {
+    display: inline-block; padding: 14px 26px; border-radius: 6px;
+    font-weight: 700; text-decoration: none; font-size: 15px;
+    transition: background .15s ease, transform .15s ease;
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .btn-brand { background: var(--brand); color: #fff; }
+  .btn-brand:hover { background: var(--brand-dark); }
+  .btn-ghost { border: 2px solid #fff; color: #fff; }
+  .btn-ghost:hover { background: rgba(255,255,255,.12); }
+  .btn-dark { background: var(--navy); color: #fff; }
+  .btn-dark:hover { background: var(--navy-2); }
+
+  /* Utility bar */
+  .utility {
+    background: var(--navy); color: #c9d4df; font-size: 13px;
+  }
+  .utility .wrap { display: flex; justify-content: space-between; align-items: center; height: 34px; }
+  .utility a { color: #c9d4df; text-decoration: none; margin-left: 18px; }
+  .utility a:hover { color: #fff; }
+  .utility .phone { color: var(--gold); font-weight: 700; text-decoration: none; }
+
+  /* Header */
+  header.site {
+    position: sticky; top: 0; z-index: 50; background: #fff;
+    border-bottom: 1px solid var(--line);
+  }
+  header.site .wrap { display: flex; align-items: center; gap: 28px; height: 68px; }
+  .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .logo .mark {
+    width: 38px; height: 38px; border-radius: 8px; background: var(--brand);
+    display: grid; place-items: center; color: #fff; flex: none;
+  }
+  .logo .name { font-size: 22px; font-weight: 800; letter-spacing: -.5px; color: var(--ink); }
+  .logo .name span { color: var(--brand); }
+  nav.main { display: flex; gap: 26px; margin-left: auto; }
+  nav.main a { text-decoration: none; font-weight: 600; font-size: 15px; color: var(--ink-2); }
+  nav.main a:hover { color: var(--brand); }
+  .header-cta { margin-left: 8px; }
+  .menu-btn { display: none; margin-left: auto; background: none; border: 1px solid var(--line); border-radius: 6px; padding: 8px 12px; font-size: 15px; }
+
+  /* Hero */
+  .hero {
+    background: linear-gradient(180deg, var(--navy) 0%, var(--navy-2) 100%);
+    color: #fff; overflow: hidden; position: relative;
+  }
+  .hero .wrap { display: grid; grid-template-columns: 1.1fr .9fr; gap: 40px; align-items: center; padding-top: 72px; padding-bottom: 72px; }
+  .hero .kicker { color: var(--gold); font-weight: 700; letter-spacing: .12em; text-transform: uppercase; font-size: 13px; margin-bottom: 14px; }
+  .hero h1 { font-size: clamp(34px, 5vw, 54px); line-height: 1.08; margin: 0 0 18px; letter-spacing: -1px; }
+  .hero p.lede { font-size: 18px; color: #c9d4df; max-width: 34em; margin: 0 0 28px; }
+  .hero .actions { display: flex; gap: 14px; flex-wrap: wrap; }
+  .hero .art { text-align: center; }
+
+  /* Stats strip */
+  .stats { background: var(--brand); color: #fff; }
+  .stats .wrap { display: grid; grid-template-columns: repeat(3, 1fr); text-align: center; padding: 26px 22px; gap: 18px; }
+  .stats .num { font-size: 32px; font-weight: 800; line-height: 1; }
+  .stats .lbl { font-size: 14px; opacity: .92; margin-top: 6px; }
+
+  /* Sections */
+  section { padding: 72px 0; }
+  section.alt { background: var(--bg-soft); }
+  .sec-head { text-align: center; max-width: 640px; margin: 0 auto 44px; }
+  .sec-head h2 { font-size: clamp(26px, 3.4vw, 36px); margin: 0 0 12px; letter-spacing: -.5px; }
+  .sec-head p { color: var(--muted); margin: 0; font-size: 17px; }
+
+  /* Product cards */
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .card {
+    background: #fff; border: 1px solid var(--line); border-radius: 12px;
+    overflow: hidden; display: flex; flex-direction: column;
+    transition: box-shadow .15s ease, transform .15s ease;
+  }
+  .card:hover { box-shadow: 0 12px 32px rgba(14,28,43,.12); transform: translateY(-3px); }
+  .card .thumb { background: var(--bg-soft); padding: 28px; display: grid; place-items: center; min-height: 170px; }
+  .card .body { padding: 22px 24px 26px; display: flex; flex-direction: column; flex: 1; }
+  .card h3 { margin: 0 0 8px; font-size: 20px; }
+  .card p { margin: 0 0 18px; color: var(--muted); font-size: 15px; flex: 1; }
+  .card .link { color: var(--brand); font-weight: 700; text-decoration: none; font-size: 15px; }
+  .card .link:hover { text-decoration: underline; }
+  .tag { display: inline-block; background: #fdeadd; color: var(--brand-dark); font-size: 12px; font-weight: 700; border-radius: 999px; padding: 3px 10px; margin-bottom: 10px; align-self: flex-start; }
+
+  /* How it works */
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; counter-reset: step; }
+  .step { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 28px 26px; position: relative; }
+  .step::before {
+    counter-increment: step; content: counter(step);
+    display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%;
+    background: var(--navy); color: #fff; font-weight: 800; font-size: 18px; margin-bottom: 16px;
+  }
+  .step h3 { margin: 0 0 8px; font-size: 18px; }
+  .step p { margin: 0; color: var(--muted); font-size: 15px; }
+
+  /* Split CTA (sizing tool) */
+  .split { background: var(--navy); color: #fff; border-radius: 16px; overflow: hidden; display: grid; grid-template-columns: 1.2fr .8fr; }
+  .split .txt { padding: 48px 44px; }
+  .split h2 { margin: 0 0 12px; font-size: 30px; letter-spacing: -.5px; }
+  .split p { color: #c9d4df; margin: 0 0 26px; }
+  .split .art { background: var(--navy-2); display: grid; place-items: center; padding: 30px; }
+
+  /* Testimonials */
+  .quotes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .quote { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 26px; }
+  .quote .stars { color: var(--brand); letter-spacing: 3px; margin-bottom: 12px; }
+  .quote p { margin: 0 0 16px; font-size: 15px; color: var(--ink-2); }
+  .quote .who { font-weight: 700; font-size: 14px; }
+  .quote .where { color: var(--muted); font-size: 13px; }
+
+  /* Dealer strip */
+  .dealer { background: linear-gradient(90deg, var(--brand) 0%, var(--brand-dark) 100%); color: #fff; }
+  .dealer .wrap { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-top: 44px; padding-bottom: 44px; flex-wrap: wrap; }
+  .dealer h2 { margin: 0 0 6px; font-size: 28px; }
+  .dealer p { margin: 0; opacity: .95; }
+  .dealer form { display: flex; gap: 10px; flex-wrap: wrap; }
+  .dealer input {
+    padding: 13px 16px; border-radius: 6px; border: none; font-size: 15px; min-width: 220px;
+  }
+  .dealer button { border: none; cursor: pointer; }
+
+  /* FAQ */
+  details { border: 1px solid var(--line); border-radius: 10px; background: #fff; margin-bottom: 12px; }
+  summary { cursor: pointer; font-weight: 700; padding: 18px 22px; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; color: var(--brand); font-size: 22px; font-weight: 800; }
+  details[open] summary::after { content: "–"; }
+  details .a { padding: 0 22px 20px; color: var(--muted); font-size: 15px; }
+  .faq-wrap { max-width: 780px; margin: 0 auto; }
+
+  /* Footer */
+  footer { background: var(--navy); color: #9fb0c0; font-size: 14px; }
+  footer .top { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 32px; padding: 56px 0 40px; }
+  footer h4 { color: #fff; font-size: 14px; text-transform: uppercase; letter-spacing: .1em; margin: 0 0 14px; }
+  footer ul { list-style: none; margin: 0; padding: 0; }
+  footer li { margin-bottom: 9px; }
+  footer a { color: #9fb0c0; text-decoration: none; }
+  footer a:hover { color: #fff; }
+  footer .brandline { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  footer .brandline .name { color: #fff; font-weight: 800; font-size: 20px; }
+  footer .brandline .name span { color: var(--brand); }
+  footer .legal { border-top: 1px solid rgba(255,255,255,.12); padding: 20px 0 28px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; font-size: 13px; }
+
+  /* Responsive */
+  @media (max-width: 920px) {
+    nav.main, .header-cta { display: none; }
+    header.site.open nav.main {
+      display: flex; flex-direction: column; position: absolute; top: 68px; left: 0; right: 0;
+      background: #fff; border-bottom: 1px solid var(--line); padding: 18px 22px; gap: 16px;
+    }
+    .menu-btn { display: block; }
+    .hero .wrap, .split { grid-template-columns: 1fr; }
+    .hero .art { order: -1; }
+    .cards, .steps, .quotes { grid-template-columns: 1fr; }
+    .stats .wrap { grid-template-columns: 1fr; gap: 22px; }
+    footer .top { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Utility bar -->
+<div class="utility">
+  <div class="wrap">
+    <span>Storm season is here — be ready before the lights go out.</span>
+    <span>
+      <a class="phone" href="tel:18005550149">1-800-555-0149</a>
+      <a href="#support">Support</a>
+      <a href="#dealers">Find a Dealer</a>
+    </span>
+  </div>
+</div>
+
+<!-- Header -->
+<header class="site" id="top">
+  <div class="wrap">
+    <a class="logo" href="https://www.gridfree.com/" aria-label="GridFree home">
+      <span class="mark" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z" fill="#fff"/></svg>
+      </span>
+      <span class="name">Grid<span>Free</span></span>
+    </a>
+    <button class="menu-btn" aria-label="Toggle menu" onclick="document.getElementById('top').classList.toggle('open')">Menu ☰</button>
+    <nav class="main" aria-label="Primary">
+      <a href="#products">Products</a>
+      <a href="#how">How It Works</a>
+      <a href="#sizing">Sizing Tool</a>
+      <a href="#dealers">Dealers</a>
+      <a href="#support">Support</a>
+    </nav>
+    <a class="btn btn-brand header-cta" href="#quote">Get a Free Quote</a>
+  </div>
+</header>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="wrap">
+    <div>
+      <div class="kicker">Whole-Home Backup Power</div>
+      <h1>When the grid goes down, your home doesn't have to.</h1>
+      <p class="lede">GridFree home standby generators and battery systems detect an outage in seconds and restore power automatically — no extension cords, no gas cans, no waiting in the dark.</p>
+      <div class="actions">
+        <a class="btn btn-brand" href="#quote" id="quote">Get a Free Quote</a>
+        <a class="btn btn-ghost" href="#products">Explore Products</a>
+      </div>
+    </div>
+    <div class="art" aria-hidden="true">
+      <!-- Standby generator illustration -->
+      <svg width="380" height="280" viewBox="0 0 380 280" fill="none" role="img" aria-label="Illustration of a home standby generator">
+        <rect x="20" y="210" width="340" height="14" rx="7" fill="#0a1522"/>
+        <rect x="60" y="80" width="260" height="132" rx="14" fill="#233850"/>
+        <rect x="60" y="80" width="260" height="34" rx="14" fill="#2e4763"/>
+        <rect x="84" y="128" width="150" height="10" rx="5" fill="#3c5a7c"/>
+        <rect x="84" y="148" width="150" height="10" rx="5" fill="#3c5a7c"/>
+        <rect x="84" y="168" width="150" height="10" rx="5" fill="#3c5a7c"/>
+        <circle cx="278" cy="158" r="26" fill="#16283c"/>
+        <path d="M282 142l-12 18h8l-3 16 13-19h-8l2-15z" fill="#f26a1b"/>
+        <rect x="96" y="92" width="90" height="12" rx="6" fill="#f26a1b"/>
+        <circle cx="304" cy="98" r="5" fill="#67e08a"/>
+        <path d="M120 60c18-26 58-26 76 0" stroke="#ffb35c" stroke-width="5" stroke-linecap="round"/>
+        <path d="M134 44c12-16 36-16 48 0" stroke="#ffb35c" stroke-width="5" stroke-linecap="round" opacity=".65"/>
+        <path d="M147 29c6-8 16-8 22 0" stroke="#ffb35c" stroke-width="5" stroke-linecap="round" opacity=".35"/>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<!-- Stats -->
+<div class="stats">
+  <div class="wrap">
+    <div><div class="num">10 sec</div><div class="lbl">Typical time from outage to automatic restore</div></div>
+    <div><div class="num">3,200+</div><div class="lbl">Certified GridFree dealers across North America</div></div>
+    <div><div class="num">10-yr</div><div class="lbl">Limited warranty on every home standby system</div></div>
+  </div>
+</div>
+
+<!-- Products -->
+<section id="products">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Backup power for every home and budget</h2>
+      <p>From whole-home standby generators to silent battery storage, GridFree has a system that fits the way you live.</p>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <div class="thumb" aria-hidden="true">
+          <svg width="150" height="110" viewBox="0 0 150 110" fill="none"><rect x="15" y="30" width="120" height="62" rx="8" fill="#233850"/><rect x="15" y="30" width="120" height="16" rx="8" fill="#2e4763"/><rect x="26" y="54" width="62" height="6" rx="3" fill="#3c5a7c"/><rect x="26" y="66" width="62" height="6" rx="3" fill="#3c5a7c"/><rect x="26" y="78" width="62" height="6" rx="3" fill="#3c5a7c"/><circle cx="112" cy="66" r="14" fill="#16283c"/><path d="M114 57l-7 10h5l-2 9 8-11h-5l1-8z" fill="#f26a1b"/><rect x="8" y="92" width="134" height="8" rx="4" fill="#0a1522"/></svg>
+        </div>
+        <div class="body">
+          <span class="tag">Best Seller</span>
+          <h3>Home Standby Generators</h3>
+          <p>Permanently installed, runs on natural gas or propane, and turns on by itself the moment the power goes out. Sizes from 10kW to 26kW cover essentials or your entire home.</p>
+          <a class="link" href="#quote">Shop Standby Generators →</a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="thumb" aria-hidden="true">
+          <svg width="150" height="110" viewBox="0 0 150 110" fill="none"><rect x="30" y="18" width="90" height="76" rx="10" fill="#233850"/><rect x="40" y="30" width="70" height="26" rx="5" fill="#16283c"/><rect x="46" y="38" width="34" height="10" rx="3" fill="#67e08a"/><circle cx="98" cy="43" r="6" fill="#f26a1b"/><rect x="40" y="64" width="70" height="8" rx="4" fill="#3c5a7c"/><rect x="40" y="78" width="44" height="8" rx="4" fill="#3c5a7c"/><rect x="44" y="8" width="62" height="10" rx="5" fill="#2e4763"/></svg>
+        </div>
+        <div class="body">
+          <span class="tag">Zero Noise</span>
+          <h3>GridFree Vault™ Battery Storage</h3>
+          <p>Whole-home battery backup that pairs with solar or charges from the grid. Silent, emission-free power with intelligent load management from the GridFree app.</p>
+          <a class="link" href="#quote">Explore Battery Storage →</a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="thumb" aria-hidden="true">
+          <svg width="150" height="110" viewBox="0 0 150 110" fill="none"><rect x="25" y="34" width="100" height="52" rx="10" fill="#233850"/><circle cx="45" cy="94" r="10" fill="#0a1522"/><circle cx="105" cy="94" r="10" fill="#0a1522"/><rect x="35" y="44" width="40" height="24" rx="4" fill="#16283c"/><path d="M52 48l-8 11h6l-2 10 9-12h-6l1-9z" fill="#f26a1b"/><rect x="84" y="46" width="30" height="8" rx="4" fill="#3c5a7c"/><rect x="84" y="60" width="30" height="8" rx="4" fill="#3c5a7c"/><rect x="30" y="22" width="90" height="10" rx="5" fill="#2e4763"/></svg>
+        </div>
+        <div class="body">
+          <span class="tag">Grab &amp; Go</span>
+          <h3>Portable Power</h3>
+          <p>Inverter generators and portable power stations for job sites, tailgates, camping, and storm kits. Quiet-run technology and outlets for everything you need to keep going.</p>
+          <a class="link" href="#quote">See Portable Options →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How it works -->
+<section class="alt" id="how">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Automatic backup power in three steps</h2>
+      <p>A GridFree home standby system watches the grid 24/7 so you never have to think about it.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <h3>The grid fails</h3>
+        <p>Your GridFree system senses the outage instantly — day or night, whether you're home or away on vacation.</p>
+      </div>
+      <div class="step">
+        <h3>GridFree takes over</h3>
+        <p>Within seconds, the automatic transfer switch safely disconnects from the utility and your generator or Vault battery starts delivering power.</p>
+      </div>
+      <div class="step">
+        <h3>Life goes on</h3>
+        <p>Lights, HVAC, refrigerators, medical devices, and Wi-Fi keep running until utility power returns — then the system hands back over and resets itself.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Sizing tool CTA -->
+<section id="sizing">
+  <div class="wrap">
+    <div class="split">
+      <div class="txt">
+        <h2>What size system does your home need?</h2>
+        <p>Answer a few quick questions about your square footage, appliances, and must-run essentials. Our sizing tool recommends the right GridFree system in under two minutes — no email required.</p>
+        <a class="btn btn-brand" href="#quote">Start the Sizing Tool</a>
+      </div>
+      <div class="art" aria-hidden="true">
+        <svg width="220" height="180" viewBox="0 0 220 180" fill="none"><rect x="30" y="20" width="160" height="140" rx="14" fill="#233850"/><rect x="48" y="40" width="124" height="18" rx="6" fill="#16283c"/><rect x="48" y="70" width="124" height="12" rx="6" fill="#3c5a7c"/><rect x="48" y="90" width="90" height="12" rx="6" fill="#3c5a7c"/><rect x="48" y="110" width="106" height="12" rx="6" fill="#3c5a7c"/><rect x="48" y="132" width="70" height="16" rx="8" fill="#f26a1b"/></svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section class="alt">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Trusted by homeowners who've been through the dark</h2>
+      <p>Real stories from GridFree families after real outages.</p>
+    </div>
+    <div class="quotes">
+      <div class="quote">
+        <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+        <p>"An ice storm knocked our neighborhood out for four days. Our GridFree kicked on in seconds and we barely noticed. The neighbors charged their phones at our place."</p>
+        <div class="who">Dana R.</div>
+        <div class="where">Rochester, NY</div>
+      </div>
+      <div class="quote">
+        <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+        <p>"We went with the Vault battery paired with our solar panels. It's completely silent — the only way we knew the grid was down was the app notification."</p>
+        <div class="who">Marcus &amp; Elena T.</div>
+        <div class="where">Austin, TX</div>
+      </div>
+      <div class="quote">
+        <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+        <p>"My mother relies on an oxygen concentrator. Having automatic backup power isn't a luxury for us — it's peace of mind every single day. Installation took one afternoon."</p>
+        <div class="who">Priya S.</div>
+        <div class="where">Tampa, FL</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Dealer locator -->
+<section class="dealer" id="dealers" style="padding:0;">
+  <div class="wrap">
+    <div>
+      <h2>Find your local GridFree dealer</h2>
+      <p>Free in-home assessments, professional installation, and lifetime service from a certified pro near you.</p>
+    </div>
+    <form onsubmit="event.preventDefault(); alert('Dealer locator demo — connect this form to your dealer directory.');">
+      <input type="text" inputmode="numeric" placeholder="Enter ZIP code" aria-label="ZIP code" required />
+      <button class="btn btn-dark" type="submit">Search Dealers</button>
+    </form>
+  </div>
+</section>
+
+<!-- FAQ / Support -->
+<section id="support">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Frequently asked questions</h2>
+      <p>Everything homeowners ask before going GridFree.</p>
+    </div>
+    <div class="faq-wrap">
+      <details>
+        <summary>How much does a home standby generator cost?</summary>
+        <div class="a">Most whole-home installations range from $9,000 to $18,000 including the generator, transfer switch, and professional installation. Your local GridFree dealer provides an exact quote after a free in-home assessment, and financing options are available.</div>
+      </details>
+      <details>
+        <summary>Generator or battery — which is right for me?</summary>
+        <div class="a">Standby generators run indefinitely on natural gas or propane and are ideal for long, multi-day outages. The GridFree Vault™ battery is silent and emission-free, perfect for shorter outages, solar pairing, and daily energy-bill savings. Many homes combine both for layered protection.</div>
+      </details>
+      <details>
+        <summary>How long does installation take?</summary>
+        <div class="a">A typical home standby installation is completed in one day once permits are in place. Your certified dealer handles permitting, gas and electrical connections, inspection, and startup — and walks you through the GridFree app before they leave.</div>
+      </details>
+      <details>
+        <summary>What maintenance is required?</summary>
+        <div class="a">GridFree standby generators run a brief self-test each week and report status to your phone. An annual service visit — oil, filter, and inspection — keeps your 10-year warranty in force. Vault battery systems are maintenance-free.</div>
+      </details>
+      <details>
+        <summary>Can I monitor my system remotely?</summary>
+        <div class="a">Yes. The free GridFree app shows live status, outage history, fuel or charge levels, and maintenance reminders, and sends instant alerts when your system takes over during an outage.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="wrap">
+    <div class="top">
+      <div>
+        <div class="brandline">
+          <span class="mark" style="width:32px;height:32px;border-radius:7px;background:var(--brand);display:grid;place-items:center;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z" fill="#fff"/></svg>
+          </span>
+          <span class="name">Grid<span>Free</span></span>
+        </div>
+        <p style="margin:0 0 14px; max-width:30em;">GridFree builds home standby generators, portable power, and battery storage that keep families safe and comfortable when the grid can't.</p>
+        <p style="margin:0;">Sales &amp; support: <a href="tel:18005550149">1-800-555-0149</a><br/>
+        <a href="mailto:hello@gridfree.com">hello@gridfree.com</a></p>
+      </div>
+      <div>
+        <h4>Products</h4>
+        <ul>
+          <li><a href="#products">Home Standby Generators</a></li>
+          <li><a href="#products">Vault™ Battery Storage</a></li>
+          <li><a href="#products">Portable Power</a></li>
+          <li><a href="#sizing">Sizing Tool</a></li>
+          <li><a href="#quote">Get a Quote</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="https://www.gridfree.com/about">About GridFree</a></li>
+          <li><a href="https://www.gridfree.com/careers">Careers</a></li>
+          <li><a href="https://www.gridfree.com/news">Newsroom</a></li>
+          <li><a href="#dealers">Become a Dealer</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Support</h4>
+        <ul>
+          <li><a href="#support">FAQs</a></li>
+          <li><a href="https://www.gridfree.com/support/manuals">Product Manuals</a></li>
+          <li><a href="https://www.gridfree.com/support/register">Register Your Product</a></li>
+          <li><a href="https://www.gridfree.com/support/warranty">Warranty</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="legal">
+      <span>© 2026 GridFree, Inc. All rights reserved. · www.gridfree.com</span>
+      <span><a href="https://www.gridfree.com/privacy">Privacy Policy</a> · <a href="https://www.gridfree.com/terms">Terms of Use</a></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
