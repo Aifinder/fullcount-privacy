@@ -1,0 +1,18 @@
+{
+  "name": "autonomous-content-system",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Reference implementation of the Autonomous Agentic Content System blueprint (Phase 1 MVP). Runs end-to-end against a deterministic simulation provider; live platform posting is behind a swappable provider interface.",
+  "engines": { "node": ">=20" },
+  "bin": { "acs": "src/cli.js" },
+  "scripts": {
+    "seed": "node src/cli.js seed",
+    "tick": "node src/cli.js tick",
+    "run": "node src/cli.js run",
+    "status": "node src/cli.js status",
+    "reset": "node src/cli.js reset",
+    "serve": "node src/server.js",
+    "test": "node --test"
+  }
+}

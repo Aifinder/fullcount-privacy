@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ACS — Autonomous Content System</title>
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #0B1220; --panel: #121B2E; --panel2: #0E1526; --line: #22304C;
+    --text: #E7ECF5; --dim: #93A1BC; --accent: #F5C518; --green: #35D07F;
+    --amber: #F5A623; --red: #FF5D5D; --blue: #5B9BFF; --win: #C77DFF;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  header { display: flex; align-items: center; gap: 16px; padding: 14px 22px;
+    border-bottom: 1px solid var(--line); position: sticky; top: 0; background: var(--panel2); z-index: 5; }
+  header h1 { font-size: 16px; margin: 0; letter-spacing: .3px; }
+  header .sub { color: var(--dim); font-size: 12px; }
+  .grow { flex: 1; }
+  button { background: var(--panel); color: var(--text); border: 1px solid var(--line);
+    border-radius: 8px; padding: 8px 14px; font-size: 13px; cursor: pointer; }
+  button:hover { border-color: var(--accent); }
+  button.primary { background: var(--accent); color: #1a1a1a; border-color: var(--accent); font-weight: 600; }
+  nav { display: flex; gap: 4px; padding: 10px 22px 0; border-bottom: 1px solid var(--line); background: var(--panel2); }
+  nav a { padding: 8px 14px; color: var(--dim); font-size: 13px; cursor: pointer; border-bottom: 2px solid transparent; }
+  nav a.active { color: var(--text); border-bottom-color: var(--accent); }
+  main { padding: 20px 22px 60px; max-width: 1400px; margin: 0 auto; }
+  .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px,1fr)); gap: 12px; margin-bottom: 20px; }
+  .kpi { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
+  .kpi .v { font-size: 24px; font-weight: 700; }
+  .kpi .l { color: var(--dim); font-size: 12px; margin-top: 2px; }
+  .kpi .note { color: var(--accent); font-size: 11px; margin-top: 4px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px,1fr)); gap: 12px; }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px; cursor: pointer; transition: border-color .15s; }
+  .card:hover { border-color: var(--accent); }
+  .card .top { display: flex; align-items: center; gap: 8px; }
+  .dot { width: 9px; height: 9px; border-radius: 50%; flex: none; }
+  .dot.green { background: var(--green);} .dot.amber{background:var(--amber);} .dot.red{background:var(--red);} .dot.killed{background:#555;}
+  .card h3 { font-size: 14px; margin: 0; }
+  .card .niche { color: var(--dim); font-size: 12px; }
+  .chip { display:inline-block; font-size: 11px; padding: 1px 7px; border-radius: 20px; border: 1px solid var(--line); color: var(--dim); }
+  .row { display: flex; justify-content: space-between; font-size: 12px; margin-top: 8px; color: var(--dim); }
+  .row b { color: var(--text); font-weight: 600; }
+  .bars { display:flex; gap:2px; height: 26px; align-items: flex-end; margin-top: 10px; }
+  .bar { flex:1; background: var(--blue); border-radius: 2px 2px 0 0; min-height: 2px; opacity:.8; }
+  .bar.win { background: var(--win); }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--line); }
+  th { color: var(--dim); font-weight: 500; font-size: 12px; }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; }
+  .section { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 16px; margin-bottom: 16px; }
+  .section h2 { font-size: 14px; margin: 0 0 12px; }
+  .alerts { display:flex; flex-direction: column; gap: 6px; }
+  .alert { display:flex; gap:8px; align-items:center; font-size:12px; padding: 6px 10px; border-radius: 8px; background: var(--panel2); border-left: 3px solid var(--line); }
+  .alert.red{border-left-color:var(--red);} .alert.amber{border-left-color:var(--amber);}
+  .alert.info{border-left-color:var(--blue);} .alert.win{border-left-color:var(--win);}
+  .lvl { font-size: 10px; text-transform: uppercase; color: var(--dim); letter-spacing: .5px; }
+  .evt { font-size: 12px; padding: 5px 8px; border-bottom: 1px solid var(--line); display:flex; gap:10px; }
+  .evt .d { color: var(--dim); flex:none; width: 44px; }
+  .evt .a { color: var(--accent); flex:none; width: 140px; }
+  .evt.win .a{color:var(--win);} .evt.warn .a,.evt.alert .a{color:var(--red);} .evt.hitl .a{color:var(--blue);}
+  .back { color: var(--dim); cursor: pointer; font-size: 13px; }
+  .two { display:grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .locked { color: var(--accent); } .remixed { color: var(--dim); }
+  .muted { color: var(--dim); font-size: 12px; }
+  code { background: var(--panel2); padding: 1px 6px; border-radius: 5px; font-size: 12px; }
+  @media (max-width: 760px){ .two{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+<header>
+  <h1>⚙️ Autonomous Content System</h1>
+  <span class="sub" id="clock">—</span>
+  <span class="grow"></span>
+  <span class="chip" id="provider">provider: —</span>
+  <button class="primary" id="tick">Advance 1 day ▸</button>
+  <button id="tick5">+5 days</button>
+</header>
+<nav>
+  <a data-view="portfolio" class="active">Portfolio</a>
+  <a data-view="research">Research</a>
+  <a data-view="ops">Ops</a>
+</nav>
+<main id="main">loading…</main>
+
+<script>
+const state = { data: null, view: "portfolio", station: null };
+
+function applyHash(){
+  const h = location.hash.replace(/^#/, "");
+  if (h.startsWith("station/")) { return { station: h.split("/")[1] }; }
+  if (["portfolio","research","ops"].includes(h)) { state.view = h; document.querySelectorAll("nav a").forEach(x=>x.classList.toggle("active",x.dataset.view===h)); }
+  return {};
+}
+
+async function load() {
+  state.data = await (await fetch("/api/state")).json();
+  document.getElementById("clock").textContent =
+    `day ${state.data.meta.clock} · ${state.data.meta.stationCount} stations · seed ${state.data.meta.seed}`;
+  document.getElementById("provider").textContent = `provider: ${state.data.meta.provider}`;
+  const h = applyHash();
+  if (h.station) return openStation(h.station);
+  render();
+}
+window.addEventListener("hashchange", ()=>{ state.station=null; load(); });
+
+async function tick(n=1){
+  const btn = document.getElementById("tick"); btn.disabled = true; btn.textContent = "running…";
+  for (let i=0;i<n;i++) await fetch("/api/tick",{method:"POST"});
+  btn.disabled = false; btn.textContent = "Advance 1 day ▸";
+  await load();
+}
+document.getElementById("tick").onclick = ()=>tick(1);
+document.getElementById("tick5").onclick = ()=>tick(5);
+document.querySelectorAll("nav a").forEach(a=>a.onclick=()=>{
+  state.view=a.dataset.view; state.station=null;
+  document.querySelectorAll("nav a").forEach(x=>x.classList.toggle("active",x===a));
+  render();
+});
+
+function render(){
+  if (state.station) return renderStation();
+  const m = document.getElementById("main");
+  if (!state.data.stations.length){ m.innerHTML = `<div class="section"><p>No stations yet. Seed some:</p><code>cd acs && node src/cli.js seed 6</code></div>`; return; }
+  if (state.view==="portfolio") m.innerHTML = viewPortfolio();
+  else if (state.view==="research") m.innerHTML = viewResearch();
+  else m.innerHTML = viewOps();
+  if (state.view==="portfolio") document.querySelectorAll(".card").forEach(c=>c.onclick=()=>openStation(c.dataset.id));
+}
+
+const fmt = n => (n??0).toLocaleString();
+const esc = s => String(s??"").replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+
+function viewPortfolio(){
+  const k = state.data.kpis;
+  const kpis = [
+    ["Posts shipped", fmt(k.postsShipped), `${k.avgPostsPerStationPerDay}/station/day`, "primary KPI (§7)"],
+    ["Winner rate", k.winnerRate+"%", `${k.winners} winners`, "beats station median >2×"],
+    ["Engagement compliance", k.engagementCompliance+"%", "2h window", ""],
+    ["Followers", fmt(k.followers), "portfolio total", ""],
+    ["Monetization-eligible", fmt(k.monetizationEligible), "day 60+ & trust gates", "proposal → human approval"],
+  ].map(([l,v,s,note])=>`<div class="kpi"><div class="v">${v}</div><div class="l">${l} · ${s}</div>${note?`<div class="note">${note}</div>`:""}</div>`).join("");
+
+  const alerts = state.data.alerts.length ? `<div class="section"><h2>Alerts</h2><div class="alerts">${
+    state.data.alerts.slice().reverse().map(a=>`<div class="alert ${a.level}"><span class="lvl">${a.level}</span><span>${esc(a.station)}</span><span class="muted">${esc(a.msg)}</span></div>`).join("")
+  }</div></div>` : "";
+
+  const cards = state.data.stations.map(s=>{
+    const barsData = spark(s);
+    return `<div class="card" data-id="${s.id}">
+      <div class="top"><span class="dot ${s.status}"></span><h3>${esc(s.name)}</h3><span class="grow"></span><span class="chip">${s.platform}</span></div>
+      <div class="niche">${esc(s.niche||"—")} · ${s.phase} (day ${s.day})</div>
+      <div class="row"><span>posts <b>${s.postsShipped}</b></span><span>streak <b>${s.streak}</b></span><span>wins <b>${s.winnerCount}</b> (${s.winnerRate}%)</span></div>
+      <div class="row"><span>followers <b>${fmt(s.followers)}</b></span><span>7d views <b>${fmt(s.view7d)}</b></span>${s.monetizationReady?'<span class="locked">💰 ready</span>':''}</div>
+      <div class="bars">${barsData}</div>
+    </div>`;
+  }).join("");
+
+  return `<div class="kpis">${kpis}</div>${alerts}<div class="grid">${cards}</div>`;
+}
+
+function spark(s){
+  // faux 10-bar sparkline seeded by follower/wins to hint trend (real data in station view)
+  const n=12; let out="";
+  for(let i=0;i<n;i++){ const h = 10 + ((s.id.charCodeAt(2)*i*7 + s.winnerCount*i)%90); out+=`<div class="bar" style="height:${h}%"></div>`; }
+  return out;
+}
+
+function viewResearch(){
+  const r = state.data.research;
+  const conc = `<div class="section"><h2>Niche concentration (portfolio balancing §2.2)</h2><table><tr><th>niche</th><th>stations</th><th>share</th></tr>${
+    r.concentration.map(c=>`<tr><td>${esc(c.niche)}</td><td>${c.n}</td><td>${(c.share*100).toFixed(0)}%</td></tr>`).join("")
+  }</table></div>`;
+  const validated = `<div class="section"><h2>Cross-station validated openers (§2.9 → §2.3)</h2>${
+    r.validatedPatterns.length? `<table><tr><th>opener (locked)</th><th>niche</th><th>internal wins</th><th>used by</th></tr>${
+      r.validatedPatterns.map(v=>`<tr><td class="locked">${esc(v.opener)}</td><td>${esc(v.niche)}</td><td>${v.wins}</td><td>${v.usedBy}</td></tr>`).join("")
+    }</table>` : `<p class="muted">No internally-validated patterns yet — run more days.</p>`
+  }</div>`;
+  const lib = r.openersByNiche.map(n=>`<div class="section"><h2>Opener Library — ${esc(n.niche)} (${n.count})</h2><table><tr><th>opener (copy exactly)</th><th>source views</th><th>score</th><th>used</th><th>wins</th></tr>${
+    n.top.map(o=>`<tr><td class="locked">${esc(o.opener)}</td><td>${fmt(o.views)}</td><td>${o.score}</td><td>${o.usedBy}</td><td>${o.wins}</td></tr>`).join("")
+  }</table></div>`).join("");
+  return conc + validated + lib;
+}
+
+function viewOps(){
+  const o = state.data.ops;
+  const feed = list => list.length? list.map(e=>`<div class="evt ${e.level}"><span class="d">d${e.day}</span><span class="a">${esc(e.agent||'')}</span><span>${esc(e.msg)}</span></div>`).join("") : `<p class="muted">empty</p>`;
+  return `<div class="two">
+    <div class="section"><h2>Failure queue</h2>${feed(o.failureQueue)}</div>
+    <div class="section"><h2>HITL approval inbox (sampled QA)</h2>${feed(o.hitlInbox)}</div>
+  </div>
+  <div class="section"><h2>Compliance / risk alerts</h2>${feed(o.compliance)}</div>
+  <div class="section"><h2>Agent run log</h2>${feed(o.events)}</div>`;
+}
+
+async function openStation(id){
+  state.station = await (await fetch("/api/station/"+id)).json();
+  renderStation();
+}
+
+function renderStation(){
+  const d = state.station; const s = d.station; const p = d.persona || {};
+  const m = document.getElementById("main");
+  const gate = d.monetization;
+  const cal = d.calendar.map(c=>`<tr>
+    <td>${c.day}</td>
+    <td class="locked">${esc(c.opener)}</td>
+    <td>${esc(c.title)}</td>
+    <td>${fmt(c.views)}${c.winner?' 🏆':''}</td>
+    <td>${(c.hashtags||[]).join(" ")}</td>
+    <td>${c.disclosure?'🏷️':''} ${c.fromSource?'remix':'original'}</td>
+  </tr>`).join("");
+  const lb = d.leaderboard.map(l=>`<tr><td>d${l.day}</td><td>${esc(l.title)}</td><td>${fmt(l.views)}</td><td>${l.winner?'🏆':''}</td></tr>`).join("");
+  const eng = d.engagementLog.map(e=>`<div class="evt"><span class="d">d${e.day}</span><span>${esc(e.msg)}</span></div>`).join("") || '<p class="muted">none</p>';
+
+  m.innerHTML = `
+  <div class="back" id="back">← back to portfolio</div>
+  <div class="section" style="margin-top:12px">
+    <div class="top" style="display:flex;align-items:center;gap:10px">
+      <span class="dot ${s.status}"></span><h2 style="margin:0">${esc(s.name)}</h2>
+      <span class="chip">${s.platform}</span><span class="chip">${s.phase} · day ${s.day}</span>
+      <span class="grow"></span>
+      <button id="kill" ${s.status==='killed'?'disabled':''}>${s.status==='killed'?'killed':'⛔ kill switch'}</button>
+    </div>
+    <p class="muted" style="margin:8px 0 0">${esc(d.brief?.brief?.statement||'')}</p>
+  </div>
+  <div class="kpis">
+    <div class="kpi"><div class="v">${s.postsShipped}</div><div class="l">posts shipped · streak ${s.streak}</div></div>
+    <div class="kpi"><div class="v">${s.winnerCount}</div><div class="l">winners (${s.winnerRate}%)</div></div>
+    <div class="kpi"><div class="v">${fmt(s.followers)}</div><div class="l">followers</div></div>
+    <div class="kpi"><div class="v">${d.openerHitsUsed}</div><div class="l">opener library hits used</div></div>
+    <div class="kpi"><div class="v">${gate.eligible?'READY':'gated'}</div><div class="l">monetization${gate.eligible?'':': '+esc((gate.reasons||[]).join(', '))}</div></div>
+  </div>
+  <div class="two">
+    <div class="section"><h2>Persona (voice canon §2.4)</h2>
+      <div class="row"><span>name</span><b>${esc(p.name||'—')}</b></div>
+      <div class="row"><span>tone</span><b>${esc(p.tone||'—')}</b></div>
+      <div class="row"><span>quirk</span><b>${esc(p.quirk||'—')}</b></div>
+      <div class="row"><span>banned words</span><b>${esc((p.bannedWords||[]).join(', '))}</b></div>
+      <div class="row"><span>voice model</span><b>${esc(p.visualIdentity?.voiceModel||'—')}</b></div>
+      <p class="muted" style="margin-top:8px">${esc(p.backstory||'')}</p>
+    </div>
+    <div class="section"><h2>Winner leaderboard</h2><table><tr><th>day</th><th>title</th><th>views</th><th></th></tr>${lb||'<tr><td class="muted">none</td></tr>'}</table></div>
+  </div>
+  <div class="section"><h2>Content calendar — <span class="locked">locked opener</span> + remixed body</h2>
+    <table><tr><th>day</th><th>opener (verbatim)</th><th>title</th><th>views</th><th>3 hashtags</th><th>flags</th></tr>${cal||'<tr><td class="muted">no posts yet</td></tr>'}</table>
+  </div>
+  <div class="section"><h2>Engagement log (§2.8)</h2>${eng}</div>`;
+
+  document.getElementById("back").onclick=()=>{ state.station=null; render(); };
+  const kb = document.getElementById("kill");
+  if (kb && s.status!=='killed') kb.onclick=async()=>{
+    if(!confirm("Kill this station? It stops posting immediately.")) return;
+    await fetch("/api/kill",{method:"POST",headers:{'content-type':'application/json'},body:JSON.stringify({stationId:s.id})});
+    await openStation(s.id); load();
+  };
+}
+
+load();
+</script>
+</body>
+</html>

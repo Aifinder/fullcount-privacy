@@ -1,0 +1,3 @@
+# Runtime simulation state — regenerate with `npm run seed && npm run run`.
+data/db.json
+node_modules/
